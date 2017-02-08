@@ -55,7 +55,7 @@ public class Utility {
 					city.setCityCode(array[0]);
 					city.setCityName(array[1]);
 					city.setProvinceId(provinceId);
-					// 将解析出来的数据存储到City表
+					// 将解析出来的数据存储到city表
 					coolWeatherDB.saveCity(city);
 				}
 				return true;
@@ -78,7 +78,7 @@ public class Utility {
 					county.setCountyCode(array[0]);
 					county.setCountyName(array[1]);
 					county.setCityId(cityId);
-					// 将解析出来的数据存储到County表
+					// 将解析出来的数据存储到country表
 					coolWeatherDB.saveCounty(county);
 				}
 				return true;
@@ -88,7 +88,7 @@ public class Utility {
 	}
 
 	/**
-	 * 解析服务器返回的JSON数据，并将解析出的数据存储到本地。
+	 * 瑙ｆ瀽鏈嶅姟鍣ㄨ繑鍥炵殑JSON鏁版嵁锛屽苟灏嗚В鏋愬嚭鐨勬暟鎹瓨鍌ㄥ埌鏈湴銆�
 	 */
 	public static void handleWeatherResponse(Context context, String response) {
 		try {
@@ -108,12 +108,12 @@ public class Utility {
 	}
 
 	/**
-	 * 将服务器返回的所有天气信息存储到SharedPreferences文件中。
+	 * 灏嗘湇鍔″櫒杩斿洖鐨勬墍鏈夊ぉ姘斾俊鎭瓨鍌ㄥ埌SharedPreferences鏂囦欢涓��
 	 */
 	public static void saveWeatherInfo(Context context, String cityName,
 			String weatherCode, String temp1, String temp2, String weatherDesp,
 			String publishTime) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年M月d日", Locale.CHINA);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy骞碝鏈坉鏃�", Locale.CHINA);
 		SharedPreferences.Editor editor = PreferenceManager
 				.getDefaultSharedPreferences(context).edit();
 		editor.putBoolean("city_selected", true);

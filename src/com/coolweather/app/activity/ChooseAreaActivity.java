@@ -45,7 +45,7 @@ public class ChooseAreaActivity extends Activity {
 	 */
 	private List<Province> provinceList;
 	/**
-	 * 市列表
+	 * 城市列表
 	 */
 	private List<City> cityList;
 	/**
@@ -65,7 +65,7 @@ public class ChooseAreaActivity extends Activity {
 	 */
 	private int currentLevel;
 	/**
-	 * 是否从WeatherActivity中跳转过来。
+	 * 鏄惁浠嶹eatherActivity涓烦杞繃鏉ャ��
 	 */
 	private boolean isFromWeatherActivity;
 
@@ -106,11 +106,11 @@ public class ChooseAreaActivity extends Activity {
 				}
 			}
 		});
-		queryProvinces();  // 加载省级数据
+		queryProvinces();  // 鍔犺浇鐪佺骇鏁版嵁
 	}
 
 	/**
-	 * 查询全国所有的省，优先从数据库查询，如果没有查询到再去服务器上查询。
+	 * 查询全国所有的省，优先从数据库查询，如果没有查询到再去服务器上查询
 	 */
 	private void queryProvinces() {
 		provinceList = coolWeatherDB.loadProvinces();
@@ -129,7 +129,7 @@ public class ChooseAreaActivity extends Activity {
 	}
 
 	/**
-	 * 查询选中省内所有的市，优先从数据库查询，如果没有查询到再去服务器上查询。
+	 * 查询全国所有的市，优先从数据库查询，如果没有查询到再去服务器上查询
 	 */
 	private void queryCities() {
 		cityList = coolWeatherDB.loadCities(selectedProvince.getId());
@@ -148,7 +148,7 @@ public class ChooseAreaActivity extends Activity {
 	}
 	
 	/**
-	 * 查询选中市内所有的县，优先从数据库查询，如果没有查询到再去服务器上查询。
+	 * 查询全国所有的县，优先从数据库查询，如果没有查询到再去服务器上查询
 	 */
 	private void queryCounties() {
 		countyList = coolWeatherDB.loadCounties(selectedCity.getId());
@@ -167,7 +167,7 @@ public class ChooseAreaActivity extends Activity {
 	}
 	
 	/**
-	 * 根据传入的代号和类型从服务器上查询省市县数据。
+	 * 根据代号和类型从服务器上查询省市县
 	 */
 	private void queryFromServer(final String code, final String type) {
 		String address;
@@ -192,7 +192,7 @@ public class ChooseAreaActivity extends Activity {
 							response, selectedCity.getId());
 				}
 				if (result) {
-					// 通过runOnUiThread()方法回到主线程处理逻辑
+					// 閫氳繃runOnUiThread()鏂规硶鍥炲埌涓荤嚎绋嬪鐞嗛�昏緫
 					runOnUiThread(new Runnable() {
 						@Override
 						public void run() {
@@ -211,13 +211,13 @@ public class ChooseAreaActivity extends Activity {
 
 			@Override
 			public void onError(Exception e) {
-				// 通过runOnUiThread()方法回到主线程处理逻辑
+				// 閫氳繃runOnUiThread()鏂规硶鍥炲埌涓荤嚎绋嬪鐞嗛�昏緫
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
 						closeProgressDialog();
 						Toast.makeText(ChooseAreaActivity.this,
-										"加载失败", Toast.LENGTH_SHORT).show();
+										"鍔犺浇澶辫触", Toast.LENGTH_SHORT).show();
 					}
 				});
 			}
@@ -225,7 +225,7 @@ public class ChooseAreaActivity extends Activity {
 	}
 	
 	/**
-	 * 显示进度对话框
+	 * 鏄剧ず杩涘害瀵硅瘽妗�
 	 */
 	private void showProgressDialog() {
 		if (progressDialog == null) {
@@ -237,7 +237,7 @@ public class ChooseAreaActivity extends Activity {
 	}
 	
 	/**
-	 * 关闭进度对话框
+	 * 鍏抽棴杩涘害瀵硅瘽妗�
 	 */
 	private void closeProgressDialog() {
 		if (progressDialog != null) {
@@ -246,7 +246,7 @@ public class ChooseAreaActivity extends Activity {
 	}
 	
 	/**
-	 * 捕获Back按键，根据当前的级别来判断，此时应该返回市列表、省列表、还是直接退出。
+	 * 鎹曡幏Back鎸夐敭锛屾牴鎹綋鍓嶇殑绾у埆鏉ュ垽鏂紝姝ゆ椂搴旇杩斿洖甯傚垪琛ㄣ�佺渷鍒楄〃銆佽繕鏄洿鎺ラ��鍑恒��
 	 */
 	@Override
 	public void onBackPressed() {

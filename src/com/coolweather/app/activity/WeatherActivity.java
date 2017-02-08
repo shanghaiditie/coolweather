@@ -23,35 +23,35 @@ public class WeatherActivity extends Activity implements OnClickListener{
 
 	private LinearLayout weatherInfoLayout;
 	/**
-	 * 用于显示城市名
+	 * 鐢ㄤ簬鏄剧ず鍩庡競鍚�  
 	 */
 	private TextView cityNameText;
 	/**
-	 * 用于显示发布时间
+	 * 鐢ㄤ簬鏄剧ず鍙戝竷鏃堕棿
 	 */
 	private TextView publishText;
 	/**
-	 * 用于显示天气描述信息
+	 * 鐢ㄤ簬鏄剧ず澶╂皵鎻忚堪淇℃伅
 	 */
 	private TextView weatherDespText;
 	/**
-	 * 用于显示气温1
+	 * 鐢ㄤ簬鏄剧ず姘旀俯1
 	 */
 	private TextView temp1Text;
 	/**
-	 * 用于显示气温2
+	 * 鐢ㄤ簬鏄剧ず姘旀俯2
 	 */
 	private TextView temp2Text;
 	/**
-	 * 用于显示当前日期
+	 * 鐢ㄤ簬鏄剧ず褰撳墠鏃ユ湡
 	 */
 	private TextView currentDateText;
 	/**
-	 * 切换城市按钮
+	 * 鍒囨崲鍩庡競鎸夐挳
 	 */
 	private Button switchCity;
 	/**
-	 * 更新天气按钮
+	 * 鏇存柊澶╂皵鎸夐挳
 	 */
 	private Button refreshWeather;
 	
@@ -60,7 +60,7 @@ public class WeatherActivity extends Activity implements OnClickListener{
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.weather_layout);
-		// 初始化各控件
+		// 鍒濆鍖栧悇鎺т欢
 		weatherInfoLayout = (LinearLayout) findViewById(R.id.weather_info_layout);
 		cityNameText = (TextView) findViewById(R.id.city_name);
 		publishText = (TextView) findViewById(R.id.publish_text);
@@ -72,13 +72,13 @@ public class WeatherActivity extends Activity implements OnClickListener{
 		refreshWeather = (Button) findViewById(R.id.refresh_weather);
 		String countyCode = getIntent().getStringExtra("county_code");
 		if (!TextUtils.isEmpty(countyCode)) {
-			// 有县级代号时就去查询天气
-			publishText.setText("同步中...");
+			// 鏈夊幙绾т唬鍙锋椂灏卞幓鏌ヨ澶╂皵
+			publishText.setText("鍚屾涓�...");
 			weatherInfoLayout.setVisibility(View.INVISIBLE);
 			cityNameText.setVisibility(View.INVISIBLE);
 			queryWeatherCode(countyCode);
 		} else {
-			// 没有县级代号时就直接显示本地天气
+			// 娌℃湁鍘跨骇浠ｅ彿鏃跺氨鐩存帴鏄剧ず鏈湴澶╂皵
 			showWeather();
 		}
 		switchCity.setOnClickListener(this);
@@ -95,7 +95,7 @@ public class WeatherActivity extends Activity implements OnClickListener{
 			finish();
 			break;
 		case R.id.refresh_weather:
-			publishText.setText("同步中...");
+			publishText.setText("鍚屾涓�...");
 			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 			String weatherCode = prefs.getString("weather_code", "");
 			if (!TextUtils.isEmpty(weatherCode)) {
@@ -108,7 +108,7 @@ public class WeatherActivity extends Activity implements OnClickListener{
 	}
 	
 	/**
-	 * 查询县级代号所对应的天气代号。
+	 * 鏌ヨ鍘跨骇浠ｅ彿鎵�瀵瑰簲鐨勫ぉ姘斾唬鍙枫��
 	 */
 	private void queryWeatherCode(String countyCode) {
 		String address = "http://www.weather.com.cn/data/list3/city" + countyCode + ".xml";
@@ -116,7 +116,7 @@ public class WeatherActivity extends Activity implements OnClickListener{
 	}
 
 	/**
-	 * 查询天气代号所对应的天气。
+	 * 鏌ヨ澶╂皵浠ｅ彿鎵�瀵瑰簲鐨勫ぉ姘斻��
 	 */
 	private void queryWeatherInfo(String weatherCode) {
 		String address = "http://www.weather.com.cn/data/cityinfo/" + weatherCode + ".html";
@@ -124,7 +124,7 @@ public class WeatherActivity extends Activity implements OnClickListener{
 	}
 	
 	/**
-	 * 根据传入的地址和类型去向服务器查询天气代号或者天气信息。
+	 * 鏍规嵁浼犲叆鐨勫湴鍧�鍜岀被鍨嬪幓鍚戞湇鍔″櫒鏌ヨ澶╂皵浠ｅ彿鎴栬�呭ぉ姘斾俊鎭��
 	 */
 	private void queryFromServer(final String address, final String type) {
 		HttpUtil.sendHttpRequest(address, new HttpCallbackListener() {
@@ -132,7 +132,7 @@ public class WeatherActivity extends Activity implements OnClickListener{
 			public void onFinish(final String response) {
 				if ("countyCode".equals(type)) {
 					if (!TextUtils.isEmpty(response)) {
-						// 从服务器返回的数据中解析出天气代号
+						// 浠庢湇鍔″櫒杩斿洖鐨勬暟鎹腑瑙ｆ瀽鍑哄ぉ姘斾唬鍙�
 						String[] array = response.split("\\|");
 						if (array != null && array.length == 2) {
 							String weatherCode = array[1];
@@ -140,7 +140,7 @@ public class WeatherActivity extends Activity implements OnClickListener{
 						}
 					}
 				} else if ("weatherCode".equals(type)) {
-					// 处理服务器返回的天气信息
+					// 澶勭悊鏈嶅姟鍣ㄨ繑鍥炵殑澶╂皵淇℃伅
 					Utility.handleWeatherResponse(WeatherActivity.this, response);
 					runOnUiThread(new Runnable() {
 						@Override
@@ -156,7 +156,7 @@ public class WeatherActivity extends Activity implements OnClickListener{
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						publishText.setText("同步失败");
+						publishText.setText("鍚屾澶辫触");
 					}
 				});
 			}
@@ -164,7 +164,7 @@ public class WeatherActivity extends Activity implements OnClickListener{
 	}
 	
 	/**
-	 * 从SharedPreferences文件中读取存储的天气信息，并显示到界面上。
+	 * 浠嶴haredPreferences鏂囦欢涓鍙栧瓨鍌ㄧ殑澶╂皵淇℃伅锛屽苟鏄剧ず鍒扮晫闈笂銆�
 	 */
 	private void showWeather() {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -172,7 +172,7 @@ public class WeatherActivity extends Activity implements OnClickListener{
 		temp1Text.setText(prefs.getString("temp1", ""));
 		temp2Text.setText(prefs.getString("temp2", ""));
 		weatherDespText.setText(prefs.getString("weather_desp", ""));
-		publishText.setText("今天" + prefs.getString("publish_time", "") + "发布");
+		publishText.setText("浠婂ぉ" + prefs.getString("publish_time", "") + "鍙戝竷");
 		currentDateText.setText(prefs.getString("current_date", ""));
 		weatherInfoLayout.setVisibility(View.VISIBLE);
 		cityNameText.setVisibility(View.VISIBLE);
