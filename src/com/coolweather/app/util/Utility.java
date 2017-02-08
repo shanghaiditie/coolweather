@@ -88,7 +88,7 @@ public class Utility {
 	}
 
 	/**
-	 * 瑙ｆ瀽鏈嶅姟鍣ㄨ繑鍥炵殑JSON鏁版嵁锛屽苟灏嗚В鏋愬嚭鐨勬暟鎹瓨鍌ㄥ埌鏈湴銆�
+	 * 解析服务器返回的JSON数据，并将解析数据存储到本地
 	 */
 	public static void handleWeatherResponse(Context context, String response) {
 		try {
@@ -108,12 +108,12 @@ public class Utility {
 	}
 
 	/**
-	 * 灏嗘湇鍔″櫒杩斿洖鐨勬墍鏈夊ぉ姘斾俊鎭瓨鍌ㄥ埌SharedPreferences鏂囦欢涓��
+	 * 将服务器反悔的所有天气信息存储到sharepreference文件中
 	 */
 	public static void saveWeatherInfo(Context context, String cityName,
 			String weatherCode, String temp1, String temp2, String weatherDesp,
 			String publishTime) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy骞碝鏈坉鏃�", Locale.CHINA);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年M月d日", Locale.CHINA);
 		SharedPreferences.Editor editor = PreferenceManager
 				.getDefaultSharedPreferences(context).edit();
 		editor.putBoolean("city_selected", true);

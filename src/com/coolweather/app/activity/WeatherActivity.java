@@ -23,27 +23,27 @@ public class WeatherActivity extends Activity implements OnClickListener{
 
 	private LinearLayout weatherInfoLayout;
 	/**
-	 * 鐢ㄤ簬鏄剧ず鍩庡競鍚�  
+	 * 用于显示城市名
 	 */
 	private TextView cityNameText;
 	/**
-	 * 鐢ㄤ簬鏄剧ず鍙戝竷鏃堕棿
+	 * 用于显示发布时间
 	 */
 	private TextView publishText;
 	/**
-	 * 鐢ㄤ簬鏄剧ず澶╂皵鎻忚堪淇℃伅
+	 * 用于显示天气描述
 	 */
 	private TextView weatherDespText;
 	/**
-	 * 鐢ㄤ簬鏄剧ず姘旀俯1
+	 * 显示气温1
 	 */
 	private TextView temp1Text;
 	/**
-	 * 鐢ㄤ簬鏄剧ず姘旀俯2
+	 * 显示气温2
 	 */
 	private TextView temp2Text;
 	/**
-	 * 鐢ㄤ簬鏄剧ず褰撳墠鏃ユ湡
+	 * 显示当前日期
 	 */
 	private TextView currentDateText;
 	/**
@@ -51,7 +51,7 @@ public class WeatherActivity extends Activity implements OnClickListener{
 	 */
 	private Button switchCity;
 	/**
-	 * 鏇存柊澶╂皵鎸夐挳
+	 * 刷新天气
 	 */
 	private Button refreshWeather;
 	
@@ -73,12 +73,12 @@ public class WeatherActivity extends Activity implements OnClickListener{
 		String countyCode = getIntent().getStringExtra("county_code");
 		if (!TextUtils.isEmpty(countyCode)) {
 			// 鏈夊幙绾т唬鍙锋椂灏卞幓鏌ヨ澶╂皵
-			publishText.setText("鍚屾涓�...");
+			publishText.setText("同步中...");
 			weatherInfoLayout.setVisibility(View.INVISIBLE);
 			cityNameText.setVisibility(View.INVISIBLE);
 			queryWeatherCode(countyCode);
 		} else {
-			// 娌℃湁鍘跨骇浠ｅ彿鏃跺氨鐩存帴鏄剧ず鏈湴澶╂皵
+			// 没有县级代号时直接显示本地天气
 			showWeather();
 		}
 		switchCity.setOnClickListener(this);
@@ -95,7 +95,7 @@ public class WeatherActivity extends Activity implements OnClickListener{
 			finish();
 			break;
 		case R.id.refresh_weather:
-			publishText.setText("鍚屾涓�...");
+			publishText.setText("同步中...");
 			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 			String weatherCode = prefs.getString("weather_code", "");
 			if (!TextUtils.isEmpty(weatherCode)) {
@@ -156,7 +156,7 @@ public class WeatherActivity extends Activity implements OnClickListener{
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						publishText.setText("鍚屾澶辫触");
+						publishText.setText("同步失败");
 					}
 				});
 			}
@@ -172,7 +172,7 @@ public class WeatherActivity extends Activity implements OnClickListener{
 		temp1Text.setText(prefs.getString("temp1", ""));
 		temp2Text.setText(prefs.getString("temp2", ""));
 		weatherDespText.setText(prefs.getString("weather_desp", ""));
-		publishText.setText("浠婂ぉ" + prefs.getString("publish_time", "") + "鍙戝竷");
+		publishText.setText("今天" + prefs.getString("publish_time", "") + "发布");
 		currentDateText.setText(prefs.getString("current_date", ""));
 		weatherInfoLayout.setVisibility(View.VISIBLE);
 		cityNameText.setVisibility(View.VISIBLE);
